@@ -36,15 +36,15 @@ def login(request):
 
 @csrf_exempt
 def add_trip(request):
-    user_id_in = request.POST.get('user')
-    car_id_in = request.POST.get('car')
-    start_lat_in = request.POST.get('start_lat')
-    start_lon_in = request.POST.get('start_lon')
+    user_id_in = int(request.POST.get('user'))
+    car_id_in = int(request.POST.get('car'))
+    start_lat_in = float(request.POST.get('start_lat'))
+    start_lon_in = float(request.POST.get('start_lon'))
     city_in = request.POST.get('city')
-    dist_traveled_in = request.POST.get('dist_traveled')
-    dist_walked_in = request.POST.get('dist_walked')
+    dist_traveled_in = float(request.POST.get('dist_traveled'))
+    dist_walked_in = float(request.POST.get('dist_walked'))
     end_time_in = request.POST.get('end_time')
-    duration_in = request.POST.get('duration')
+    duration_in = float(request.POST.get('duration'))
 
     trip = Trips(user_id = user_id_in, car_id = car_id_in, start_lat = start_lat_in, start_lon = start_lon_in, city = city_in, dist_traveled = dist_traveled_in, dist_walked = dist_walked_in, end_time = end_time_in, duration = duration_in)
     trip.save()

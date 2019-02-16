@@ -14,7 +14,7 @@ class Trips(models.Model):
 	car_id=models.FloatField(Cars)
 
 	start_lat=models.FloatField(max_length=20)
-	start_long=models.FloatField(max_length=20)
+	start_lon=models.FloatField(max_length=20)
 
 	city=models.CharField(max_length=200)
 
@@ -22,4 +22,4 @@ class Trips(models.Model):
 	dist_walked=models.FloatField(max_length=20)
 
 	end_time=models.DateTimeField()
-	duration=models.FloatField()
+	duration=models.FloatField(max_length=20)

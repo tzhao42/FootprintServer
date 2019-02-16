@@ -8,8 +8,9 @@ from .models import Trips
 
 def index(request):
     return HttpResponse('heck')
-
-def signup(request, email_in, password_in):
+def signup(request):
+	email_in = request.POST.get('email')
+	password_in = request.POST.get('password')
 	try:
 		user = Users(email=email_in, password=make_password(password_in))
 		user.save()

@@ -16,7 +16,27 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+import fp_client.views
+
 urlpatterns = [
-    path('fp_client/', include('fp_client.urls')),
     path('admin/', admin.site.urls),
 ]
+
+urlpatterns.extend([
+    path('', fp_client.views.index, name='index'),
+    path('signup/', fp_client.views.signup, name='signup'),
+    path('login/', fp_client.views.login, name='login'),
+    # path('add_trip/', fp_client.views.add_trip, name='add_trip'),
+    path('fetch_user_trips/', fp_client.views.fetch_user_trips, name='fetch_user_trips'),
+    path('fetch_comm_trips/', fp_client.views.fetch_comm_trips, name='fetch_comm_trips'),
+])
+
+
+
+
+
+
+
+
+
+

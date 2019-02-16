@@ -14,6 +14,8 @@ def index(request):
 def signup(request):
 	email_in = request.POST.get('email')
 	password_in = request.POST.get('password')
+	print('calling signup')
+	# print('email is {} password is {}'.format(email, password))
 
 	try:
 		user = Users(email=email_in, password=make_password(password_in))

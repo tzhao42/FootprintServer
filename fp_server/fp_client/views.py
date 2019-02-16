@@ -28,14 +28,10 @@ def login(request):
     email_in = request.POST.get('email')
     password_in = request.POST.get('password')
 
-    print("1-----------------------------")
     user = Users.objects.get(email = email_in)
-    print("2-----------------------------")
 	
     if not check_password(password_in, user.password):
-        print("3------------------------")
         return HttpResponse(json.dumps({'error': 'The password is incorrect'}), content_type='application/json')
-    print("4------------------------------")
     return HttpResponse(json.dumps({'user': user.id}), content_type='application/json')
 
 @csrf_exempt

@@ -5,7 +5,7 @@ from django.http import HttpResponse, Http404
 from django.db import IntegrityError
 from django.contrib.auth.hashers import check_password, make_password
 from django.views.decorators.csrf import csrf_exempt
-
+from datetime import datetime
 from .models import Users
 from .models import Trips
 
@@ -36,16 +36,17 @@ def login(request):
 
 @csrf_exempt
 def add_trip(request):
-    user_id_in = int(request.POST.get('user'))
+    user_id_in = int(request.POST.get('user_id'))
     user_in = Users.objects.get(id=user_id_in)
     
-    car_id_in = int(request.POST.get('car'))
+    car_id_in = int(request.POST.get('car_id'))
     start_lat_in = float(request.POST.get('start_lat'))
     start_lon_in = float(request.POST.get('start_lon'))
     city_in = request.POST.get('city')
     dist_traveled_in = float(request.POST.get('dist_traveled'))
     dist_walked_in = float(request.POST.get('dist_walked'))
-    end_time_in = request.POST.get('end_time')
+    end_time_in = datetime.strptime(request.POST.get('end_time'), '%b %d %Y %I:%M%p')
+    print('successful')
     duration_in = float(request.POST.get('duration'))
 
     trip = Trips(user = user_in, car_id = car_id_in, start_lat = start_lat_in, start_lon = start_lon_in, city = city_in, dist_traveled = dist_traveled_in, dist_walked = dist_walked_in, end_time = end_time_in, duration = duration_in)
@@ -55,11 +56,12 @@ def add_trip(request):
 
 @csrf_exempt
 def fetch_user_trips(request):
-    user_id_in = request.POST.get('user')
+    user_id_in = request.POST.get('user_id')
 
     user = Users.objects.get(id=user_id_in)
+   # user_trips = list(user.trips_set.all())
     user_trips = list(Trips.objects.filter(user_id = user.id))
-    return HttpResponse(json.dumps({'trips':users_trips}), content_type='application/json')
+    return HttpResponse(json.dumps({'trips':user_trips}), content_type='application/json')
 
 @csrf_exempt
 def fetch_comm_trips(request):

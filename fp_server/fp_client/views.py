@@ -16,12 +16,16 @@ def index(request):
 def signup(request):
     email_in = request.POST.get('email')
     password_in = request.POST.get('password')
-    print("REQUEST BODY {}".format(request.POST))
+    #print("REQUEST BODY {}".format(request.POST))
     
-    print("email_in is {} password_in is {}".format(email_in, password_in))
-    user = Users(email=email_in, password=make_password(password_in))
-    user.save()
-    return HttpResponse(json.dumps({'user':user.id}), content_type='application/json')
+    #print("email_in is {} password_in is {}".format(email_in, password_in))
+    
+    try:
+        user = Users(email=email_in, password=make_password(password_in))
+        user.save()
+        return HttpResponse(json.dumps({'user':user.id}), content_type='application/json')
+    except IntegrityError:
+         return HttpResponse(json.dumps({'error': 'That email is already taken'}), content_type='application/json')
 
 @csrf_exempt
 def login(request):

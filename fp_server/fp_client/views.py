@@ -14,8 +14,6 @@ def index(request):
 def signup(request):
 	email_in = request.POST.get('email')
 	password_in = request.POST.get('password')
-	print('calling signup')
-	# print('email is {} password is {}'.format(email, password))
 
 	try:
 		user = Users(email=email_in, password=make_password(password_in))
@@ -34,7 +32,9 @@ def login(request):
 	user = Users.objects.get(email = email_in)
 	print('Does user exist? {}'.format(user))
 	if not check_password(password_in, user.password):
+		print('is this a 404?')
 		raise Http404("password wrong")
+	print('am i returning a response...')
 	return HttpResponse(json.dumps({'success':user.id}, content_type='application/json'))
 
 @csrf_exempt

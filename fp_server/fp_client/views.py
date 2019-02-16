@@ -29,9 +29,9 @@ def login(request):
 	email_in = request.POST.get('email')
 	password_in = request.POST.get('password')
 
-	try:
-		user = Users.objects.get(email = email_in)
-		print(user)
+	user = Users.objects.get(email = email_in)
+	print(user + "-----------------------------")
+	
 	if not check_password(password_in, user.password):
 		return HttpResponse(json.dumps({'error': 'The password is incorrect'}), content_type='application/json')
 	return HttpResponse(json.dumps({'user': user.id}), content_type='application/json')

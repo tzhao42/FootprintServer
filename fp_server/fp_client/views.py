@@ -8,9 +8,11 @@ from .models import Trips
 
 def index(request):
     return HttpResponse('heck')
+
 def signup(request):
 	email_in = request.POST.get('email')
 	password_in = request.POST.get('password')
+
 	try:
 		user = Users(email=email_in, password=make_password(password_in))
 		user.save()
@@ -19,19 +21,32 @@ def signup(request):
 	except IntegrityError:
 		raise Http404("email already in use")
 
-def login(request, email_in, password_in):
+def login(request):
+	email_in = request.POST.get('email')
+	password_in = request.POST.get('password')
+
 	user = Users.objects.get(email = email_in)
 	if not check_password(password_in, user.password):
 		raise Http404("password wrong")
 	return HttpResponse("login successful for " + user.email)
 
-def fetch_user_trips(request, user_id_in):
+def fetch_user_trips(request):
+	user_id_in = request.POST.get('user')
+
 	user = Users.objects.get(id=user_id_in)
 	success= user.email + " successful fetch_user_trips"
 	return HttpResponse(success)
 
 def fetch_comm_trips(request, lat_str_in, long_str_in):
-	latitude = float(lat_str)
-	longitude = float(long_str)
-	success=latitude + longitude + + " successful fetch_comm_trips"
+	latitude = float(request.POST.get('lat_str'))
+	longitude = float(request.POST.get('long_str'))
+
+	success = latitude + longitude + + " successful fetch_comm_trips"
 	return HttpResponse(sucess)
+
+
+
+
+
+
+

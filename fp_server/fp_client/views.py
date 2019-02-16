@@ -46,28 +46,24 @@ def add_trip(request):
 	end_time_in = request.POST.get('end_time')
 	duration_in = request.POST.get('duration')
 
-	# trip = Trips(user_id = user_id_in, car_id = car_id_in, st)
+	trip = Trips(user_id = user_id_in, car_id = car_id_in, start_lat = start_lat_in, start_lon = start_lon_in, city = city_in, dist_traveled = dist_traveled_in, dist_walked = dist_walked_in, end_time = end_time_in, duration = duration_in)
+
+	return HttpResponse(json.dumps({'trip':trip.id}, content_type='application/json'))
 
 @csrf_exempt
 def fetch_user_trips(request):
 	user_id_in = request.POST.get('user')
 
 	user = Users.objects.get(id=user_id_in)
-	user_trips = Trips.objects.filter(user_id = user.id)
-
-	return HttpResponse(success)
+	user_trips = list(Trips.objects.filter(user_id = user.id))
+	return HttpResponse(json.dumps({'trips':users_trips}, content_type='application/json'))
 
 @csrf_exempt
-def fetch_comm_trips(request, lat_str_in, lon_str_in):
-	latitude = float(request.POST.get('lat_str'))
-	longitude = float(request.POST.get('lon_str'))
+def fetch_comm_trips(request):
+	city_in = request.POST.get('city')
 
-	success = latitude + longitude + + " successful fetch_comm_trips"
-	return HttpResponse(success)
+	#latitude = float(request.POST.get('lat_str'))
+	#longitude = float(request.POST.get('lon_str'))
+	city_trips = list(Trips.objects.filter(city = city_in))
 
-
-
-
-
-
-
+	return HttpResponse(json.dumps({'trips':city_trips}, content_type='application/json'))

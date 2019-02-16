@@ -49,7 +49,7 @@ def add_trip(request):
 	trip = Trips(user_id = user_id_in, car_id = car_id_in, start_lat = start_lat_in, start_lon = start_lon_in, city = city_in, dist_traveled = dist_traveled_in, dist_walked = dist_walked_in, end_time = end_time_in, duration = duration_in)
 	trip.save()
 
-	return HttpResponse(json.dumps({'trip':trip.id}, content_type='application/json'))
+	return HttpResponse(json.dumps({'trip':trip.id}), content_type='application/json')
 
 @csrf_exempt
 def fetch_user_trips(request):
@@ -57,7 +57,7 @@ def fetch_user_trips(request):
 
 	user = Users.objects.get(id=user_id_in)
 	user_trips = list(Trips.objects.filter(user_id = user.id))
-	return HttpResponse(json.dumps({'trips':users_trips}, content_type='application/json'))
+	return HttpResponse(json.dumps({'trips':users_trips}), content_type='application/json')
 
 @csrf_exempt
 def fetch_comm_trips(request):
@@ -65,4 +65,4 @@ def fetch_comm_trips(request):
 
 	city_trips = list(Trips.objects.filter(city = city_in))
 
-	return HttpResponse(json.dumps({'trips':city_trips}, content_type='application/json'))
+	return HttpResponse(json.dumps({'trips':city_trips}), content_type='application/json')

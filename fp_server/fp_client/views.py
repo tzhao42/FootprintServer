@@ -20,8 +20,7 @@ def signup(request):
 	try:
 		user = Users(email=email_in, password=make_password(password_in))
 		user.save()
-		success= user.email + " signup successful"
-		return HttpResponse(success)
+		return HttpResponse(json.dumps({'success':user.id}, content_type='application/json'))
 	except IntegrityError:
 		raise Http404("email already in use")
 
@@ -30,26 +29,44 @@ def login(request):
 	email_in = request.POST.get('email')
 	password_in = request.POST.get('password')
 
+	print('WHAT ARE THE FIELDS {}'.format(request.POST))
+
 	user = Users.objects.get(email = email_in)
+	print('Does user exist? {}'.format(user))
 	if not check_password(password_in, user.password):
 		raise Http404("password wrong")
-	return HttpResponse("login successful for " + user.email)
+	return HttpResponse(json.dumps({'success':user.id}, content_type='application/json'))
+
+@csrf_exempt
+def add_trip(request):
+	user_id_in = request.POST.get('user')
+	car_id_in = request.POST.get('car')
+	start_lat_in = request.POST.get('start_lat')
+	start_lon_in = request.POST.get('start_lon')
+	city_in = request.POST.get('city')
+	dist_traveled_in = request.POST.get('dist_traveled')
+	dist_walked_in = request.POST.get('dist_walked')
+	end_time_in = request.POST.get('end_time')
+	duration_in = request.POST.get('duration')
+
+	# trip = Trips(user_id = user_id_in, car_id = car_id_in, st)
 
 @csrf_exempt
 def fetch_user_trips(request):
 	user_id_in = request.POST.get('user')
 
 	user = Users.objects.get(id=user_id_in)
-	success= user.email + " successful fetch_user_trips"
+	user_trips = Trips.objects.filter(user_id = user.id)
+
 	return HttpResponse(success)
 
 @csrf_exempt
-def fetch_comm_trips(request, lat_str_in, long_str_in):
+def fetch_comm_trips(request, lat_str_in, lon_str_in):
 	latitude = float(request.POST.get('lat_str'))
-	longitude = float(request.POST.get('long_str'))
+	longitude = float(request.POST.get('lon_str'))
 
 	success = latitude + longitude + + " successful fetch_comm_trips"
-	return HttpResponse(sucess)
+	return HttpResponse(success)
 
 
 

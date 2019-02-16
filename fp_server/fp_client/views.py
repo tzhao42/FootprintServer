@@ -62,8 +62,6 @@ def fetch_user_trips(request):
 def fetch_comm_trips(request):
 	city_in = request.POST.get('city')
 
-	#latitude = float(request.POST.get('lat_str'))
-	#longitude = float(request.POST.get('lon_str'))
 	city_trips = list(Trips.objects.filter(city = city_in))
 
 	return HttpResponse(json.dumps({'trips':city_trips}, content_type='application/json'))

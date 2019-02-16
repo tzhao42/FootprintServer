@@ -47,6 +47,7 @@ def add_trip(request):
 	duration_in = request.POST.get('duration')
 
 	trip = Trips(user_id = user_id_in, car_id = car_id_in, start_lat = start_lat_in, start_lon = start_lon_in, city = city_in, dist_traveled = dist_traveled_in, dist_walked = dist_walked_in, end_time = end_time_in, duration = duration_in)
+	trip.save()
 
 	return HttpResponse(json.dumps({'trip':trip.id}, content_type='application/json'))
 

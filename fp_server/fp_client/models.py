@@ -12,10 +12,13 @@ class Cars(models.Model):
 class Trips(models.Model):
 
     user=models.ForeignKey(Users, on_delete=models.CASCADE)
-    car_id=models.IntegerField(Cars)
+    car_id=models.IntegerField()
 
     start_lat=models.FloatField(max_length=20)
     start_lon=models.FloatField(max_length=20)
+
+    end_lat=models.FloatField(max_length=20)
+    end_lon=models.FloatField(max_length=20)
 
     city=models.CharField(max_length=200)
 

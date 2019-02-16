@@ -16,9 +16,6 @@ def index(request):
 def signup(request):
     email_in = request.POST.get('email')
     password_in = request.POST.get('password')
-    #print("REQUEST BODY {}".format(request.POST))
-    
-    #print("email_in is {} password_in is {}".format(email_in, password_in))
     
     try:
         user = Users(email=email_in, password=make_password(password_in))
@@ -44,8 +41,12 @@ def add_trip(request):
     user_in = Users.objects.get(id=user_id_in)
     
     car_id_in = int(request.POST.get('car_id'))
+
     start_lat_in = float(request.POST.get('start_lat'))
     start_lon_in = float(request.POST.get('start_lon'))
+    end_lat_in = float(request.POST.get('end_lat'))
+    end_lon_in = float(request.POST.get('end_lon'))
+
     city_in = request.POST.get('city')
     dist_traveled_in = float(request.POST.get('dist_traveled'))
     dist_walked_in = float(request.POST.get('dist_walked'))
@@ -53,7 +54,7 @@ def add_trip(request):
     print('successful')
     duration_in = float(request.POST.get('duration'))
 
-    trip = Trips(user = user_in, car_id = car_id_in, start_lat = start_lat_in, start_lon = start_lon_in, city = city_in, dist_traveled = dist_traveled_in, dist_walked = dist_walked_in, end_time = end_time_in, duration = duration_in)
+    trip = Trips(user = user_in, car_id = car_id_in, start_lat = start_lat_in, start_lon = start_lon_in, end_lat = end_lat_in, end_lon = end_lon_in, city = city_in, dist_traveled = dist_traveled_in, dist_walked = dist_walked_in, end_time = end_time_in, duration = duration_in)
     trip.save()
 
     return HttpResponse(json.dumps({'trip':trip.id}), content_type='application/json')

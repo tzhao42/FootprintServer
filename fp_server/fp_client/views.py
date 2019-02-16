@@ -20,7 +20,7 @@ def signup(request):
 	try:
 		user = Users(email=email_in, password=make_password(password_in))
 		user.save()
-		return HttpResponse(json.dumps({'success':user.id}, content_type='application/json'))
+		return HttpResponse(json.dumps({'success':user.id}), content_type='application/json')
 	except IntegrityError:
 		raise Http404("email already in use")
 
@@ -29,15 +29,10 @@ def login(request):
 	email_in = request.POST.get('email')
 	password_in = request.POST.get('password')
 
-	print('WHAT ARE THE FIELDS {}'.format(request.POST))
-
 	user = Users.objects.get(email = email_in)
-	print('Does user exist? {}'.format(user))
 	if not check_password(password_in, user.password):
-		print('is this a 404?')
-		raise Http404("password wrong")
-	print('am i returning a response...')
-	return HttpResponse(json.dumps({'success':user.id}, content_type='application/json'))
+		return HttpResponse(json.dumps({'error': 'The password is incorrect'}), content_type='application/json')
+	return HttpResponse(json.dumps({'success': user.id}), content_type='application/json')
 
 @csrf_exempt
 def add_trip(request):

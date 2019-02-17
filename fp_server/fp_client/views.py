@@ -15,7 +15,6 @@ def index(request):
 def signup(request):
     email_in = request.POST.get('email')
     password_in = request.POST.get('password')
-    
     try:
         user = Users(email=email_in, password=make_password(password_in))
         user.save()
@@ -101,7 +100,7 @@ def stats(request):
     for i in range(len(user_trips)):
         trip = user_trips[i]
         user_carbonsaved_cumulative_raw += carbonsaved(trip)
-    user_carbonsaved_cumulative = float(user_carbonsaved_cumulative_raw / 1000) # KG
+    user_carbonsaved_cumulative = float(user_carbonsaved_cumulative_raw)
     #now we want to return user_carbonsaved_cumulative
 
     # savings for recent trips of nearby people
@@ -114,6 +113,7 @@ def stats(request):
 
     # return: user_carbonsaved_latest, user_carbonsaved_cumulative, city_trips_recent_highscores
 
+<<<<<<< HEAD
     return HttpResponse(json.dumps({'latest': user_carbonsaved_latest, 'cumulative': user_carbonsaved_cumulative, 'city_trips_recent_highscores':city_trips_recent_highscores_list_of_json}), content_type='application/json')
 
 
@@ -126,3 +126,8 @@ def stats(request):
 
 
     
+||||||| merged common ancestors
+    return HttpResponse(json.dumps({'latest': user_carbonsaved_latest, 'cumulative': user_carbonsaved_cumulative, 'city_trips_recent_highscores':city_trips_recent_highscores_list_of_json}), content_type='application/json')
+=======
+    return HttpResponse(json.dumps({'latest': user_carbonsaved_latest, 'cumulative': user_carbonsaved_cumulative, 'city_trips_recent_highscores':city_trips_recent_highscores_list_of_json}), content_type='application/json')
+>>>>>>> bc4230ef6413df884cb3326adfd9b1c8a5dcaf72

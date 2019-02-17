@@ -6,8 +6,7 @@ from django.db import IntegrityError
 from django.contrib.auth.hashers import check_password, make_password
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
-from .models import Users
-from .models import Trips
+from .models import Users, Trips, Cars
 
 def index(request):
     return HttpResponse('heck')

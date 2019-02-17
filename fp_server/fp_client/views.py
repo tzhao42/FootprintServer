@@ -49,7 +49,7 @@ def add_trip(request):
     city_in = 'New York City'
     dist_traveled_in = float(request.POST.get('dist_traveled'))
     dist_walked_in = float(request.POST.get('dist_walked'))
-    end_time_in = datetime.datetime.now()
+    end_time_in = datetime.now()
     duration_in = 0
     # duration_in = float(request.POST.get('duration'))
 
@@ -114,7 +114,9 @@ def stats(request):
     # city_trips_recent_highscores_list_of_json = [ob.as_json() for ob in city_trips_recent_highscores]
 
     # return: user_carbonsaved_latest, user_carbonsaved_cumulative, city_trips_recent_highscores
+
     return HttpResponse(json.dumps({'latest': user_carbonsaved_latest, 'cumulative': user_carbonsaved_cumulative, 'city_trips_recent_json':city_trips_recent_json}), content_type='application/json')
+<<<<<<< HEAD
 
 @csrf_exempt
 def community(request):
@@ -142,3 +144,7 @@ def community(request):
 
 
 
+||||||| merged common ancestors
+=======
+
+>>>>>>> ba2b7c2734b28a67fc40a014941d980013d17d90

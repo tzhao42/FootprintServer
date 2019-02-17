@@ -107,27 +107,16 @@ def stats(request):
     user_city = user_latest_trip.city
     city_trips = list(Trips.objects.filter(city=user_city).order_by('-end_time'))
     city_trips_recent = city_trips[:25]
-    city_trips_recent_highscores = sorted(city_trips_recent, key = carbonsaved)
+    city_trips_recent_json = [ob.as_json() for ob in city_trips_recent]
+    # city_trips_recent_highscores = sorted(city_trips_recent, key = carbonsaved)
 
-    city_trips_recent_highscores_list_of_json = [ob.as_json() for ob in city_trips_recent_highscores]
+    # city_trips_recent_highscores_list_of_json = [ob.as_json() for ob in city_trips_recent_highscores]
 
     # return: user_carbonsaved_latest, user_carbonsaved_cumulative, city_trips_recent_highscores
 
-<<<<<<< HEAD
-    return HttpResponse(json.dumps({'latest': user_carbonsaved_latest, 'cumulative': user_carbonsaved_cumulative, 'city_trips_recent_highscores':city_trips_recent_highscores_list_of_json}), content_type='application/json')
+    return HttpResponse(json.dumps({'latest': user_carbonsaved_latest, 'cumulative': user_carbonsaved_cumulative, 'city_trips_recent_json':city_trips_recent_json}), content_type='application/json')
 
 
 
 
 
-
-
-
-
-
-    
-||||||| merged common ancestors
-    return HttpResponse(json.dumps({'latest': user_carbonsaved_latest, 'cumulative': user_carbonsaved_cumulative, 'city_trips_recent_highscores':city_trips_recent_highscores_list_of_json}), content_type='application/json')
-=======
-    return HttpResponse(json.dumps({'latest': user_carbonsaved_latest, 'cumulative': user_carbonsaved_cumulative, 'city_trips_recent_highscores':city_trips_recent_highscores_list_of_json}), content_type='application/json')
->>>>>>> bc4230ef6413df884cb3326adfd9b1c8a5dcaf72

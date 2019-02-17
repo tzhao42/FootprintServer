@@ -55,7 +55,7 @@ def main():
 	# except:
 	#	print("already made this user, skipping this step")
 
-	fake_user = Users.objects.get(id=6)
+	fake_user = Users.objects.get(id=7)
 
 	for i in range(NUM_FAKE_TRIPS):
 		user=fake_user

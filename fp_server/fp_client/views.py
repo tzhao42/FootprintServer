@@ -45,12 +45,13 @@ def add_trip(request):
     end_lat_in = float(request.POST.get('end_lat'))
     end_lon_in = float(request.POST.get('end_lon'))
 
-    city_in = request.POST.get('city')
+    # city_in = request.POST.get('city')
+    city_in = 'New York City'
     dist_traveled_in = float(request.POST.get('dist_traveled'))
     dist_walked_in = float(request.POST.get('dist_walked'))
-    end_time_in = datetime.strptime(request.POST.get('end_time'), '%b %d %Y %I:%M%p')
-    print('successful')
-    duration_in = float(request.POST.get('duration'))
+    end_time_in = datetime.datetime.now()
+    duration_in = 0
+    # duration_in = float(request.POST.get('duration'))
 
     trip = Trips(user = user_in, car_id = car_id_in, start_lat = start_lat_in, start_lon = start_lon_in, end_lat = end_lat_in, end_lon = end_lon_in, city = city_in, dist_traveled = dist_traveled_in, dist_walked = dist_walked_in, end_time = end_time_in, duration = duration_in)
     trip.save()

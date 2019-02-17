@@ -16,7 +16,7 @@ def signup(request):
     email_in = request.POST.get('email')
     password_in = request.POST.get('password')
     try:
-        user = Users(email=email_in, password=make_password(password_in))
+        user = Users(email=email_in.lower(), password=make_password(password_in))
         user.save()
         return HttpResponse(json.dumps({'user':user.id}), content_type='application/json')
     except IntegrityError:
@@ -27,7 +27,7 @@ def login(request):
     email_in = request.POST.get('email')
     password_in = request.POST.get('password')
 
-    user = Users.objects.get(email = email_in)
+    user = Users.objects.get(email = email_in.lower())
 	
     if not check_password(password_in, user.password):
         return HttpResponse(json.dumps({'error': 'The password is incorrect'}), content_type='application/json')

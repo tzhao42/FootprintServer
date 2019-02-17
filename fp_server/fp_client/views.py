@@ -100,7 +100,7 @@ def stats(request):
     for i in range(len(user_trips)):
         trip = user_trips[i]
         user_carbonsaved_cumulative_raw += carbonsaved(trip)
-    user_carbonsaved_cumulative = float(user_carbonsaved_cumulative_raw / 1000) # KG
+    user_carbonsaved_cumulative = float(user_carbonsaved_cumulative_raw)
     #now we want to return user_carbonsaved_cumulative
 
     # savings for recent trips of nearby people

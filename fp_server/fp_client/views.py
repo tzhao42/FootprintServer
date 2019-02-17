@@ -117,4 +117,3 @@ def stats(request):
 
     return HttpResponse(json.dumps({'latest': user_carbonsaved_latest, 'cumulative': user_carbonsaved_cumulative, 'city_trips_recent_json':city_trips_recent_json}), content_type='application/json')
 
-

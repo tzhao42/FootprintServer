@@ -1,2 +1,2 @@
 # fp_server
-server for foot
+The backend for our environemental sustainability mobile app Footprint developed at HackNYU.

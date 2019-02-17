@@ -15,7 +15,6 @@ def index(request):
 def signup(request):
     email_in = request.POST.get('email')
     password_in = request.POST.get('password')
-    
     try:
         user = Users(email=email_in, password=make_password(password_in))
         user.save()

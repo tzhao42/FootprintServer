@@ -26,6 +26,7 @@ urlpatterns = [
     path('add_trip/', fp_client.views.add_trip, name='add_trip'),
     path('fetch_user_trips/', fp_client.views.fetch_user_trips, name='fetch_user_trips'),
     path('fetch_comm_trips/', fp_client.views.fetch_comm_trips, name='fetch_comm_trips'),
+    path('stats/', fp_client.views.stats, name='stats')
 ]
 
 

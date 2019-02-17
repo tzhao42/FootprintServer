@@ -85,7 +85,10 @@ def stats(request):
         return float(walk * cs_factor) #IN GRAMS PER MILE
 
     user_id_in = request.POST.get('user_id')
-    user = Users.objects.get(id=user_id_in)
+    try:
+        user = Users.objects.get(id=user_id_in)
+    except:
+        return Http404('user doesnt exist lul')
     
     # savings for the last trip
     user_latest_trip = Trips.objects.filter(user=user).latest('end_time') # finds the latest trip

@@ -29,9 +29,13 @@ class Trips(models.Model):
     duration=models.FloatField(max_length=20)
 
     def as_json(self):
+        car = Cars.objects.get(id=self.car_id)
+
         return dict(
             user_id = self.user.id,
             car_id = self.car_id,
+            car_type = car.name,
+            emission = float(self.dist_walked * car.emissions),
             start_lat = self.start_lat,
             start_lon = self.start_lon,
             city = self.city,

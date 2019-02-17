@@ -114,14 +114,4 @@ def stats(request):
     # city_trips_recent_highscores_list_of_json = [ob.as_json() for ob in city_trips_recent_highscores]
 
     # return: user_carbonsaved_latest, user_carbonsaved_cumulative, city_trips_recent_highscores
-
-<<<<<<< HEAD
-    return HttpResponse(json.dumps({'latest': user_carbonsaved_latest, 'cumulative': user_carbonsaved_cumulative, 'city_trips_recent_highscores':city_trips_recent_highscores_list_of_json}), content_type='application/json')
-=======
     return HttpResponse(json.dumps({'latest': user_carbonsaved_latest, 'cumulative': user_carbonsaved_cumulative, 'city_trips_recent_json':city_trips_recent_json}), content_type='application/json')
-
-
-
-
-
->>>>>>> 6da348ce4f864d3ded418ca9b22013e9791feca5

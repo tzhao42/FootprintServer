@@ -49,7 +49,7 @@ def add_trip(request):
     city_in = 'New York City'
     dist_traveled_in = float(request.POST.get('dist_traveled'))
     dist_walked_in = float(request.POST.get('dist_walked'))
-    end_time_in = datetime.datetime.now()
+    end_time_in = datetime.now()
     duration_in = 0
     # duration_in = float(request.POST.get('duration'))
 

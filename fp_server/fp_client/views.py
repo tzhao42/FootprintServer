@@ -106,7 +106,7 @@ def stats(request):
 
     # savings for recent trips of nearby people
     user_city = user_latest_trip.city
-    city_trips = list(Trips.objects.filter(city=user_city).order_by('-end_time'))
+    city_trips = list(Trips.objects.filter(user=user).order_by('-end_time'))
     city_trips_recent = city_trips[:25]
     city_trips_recent_json = [ob.as_json() for ob in city_trips_recent]
     # city_trips_recent_highscores = sorted(city_trips_recent, key = carbonsaved)
@@ -115,3 +115,30 @@ def stats(request):
 
     # return: user_carbonsaved_latest, user_carbonsaved_cumulative, city_trips_recent_highscores
     return HttpResponse(json.dumps({'latest': user_carbonsaved_latest, 'cumulative': user_carbonsaved_cumulative, 'city_trips_recent_json':city_trips_recent_json}), content_type='application/json')
+
+@csrf_exempt
+def community(request):
+    user_id_in = request.POST.get('user_id')
+    try:
+        user = Users.objects.get(id=user_id_in)
+    except:
+        return Http404('user doesnt exist lul')
+    
+        # savings for recent trips of nearby people
+    user_city = user_latest_trip.city
+    community_trips = list(Trips.objects.filter(city=user_city).order_by('-end_time'))
+    community_trips_recent = city_trips[:25]
+    community_trips_recent_json = [ob.as_json() for ob in community_trips_recent]
+    # city_trips_recent_highscores = sorted(city_trips_recent, key = carbonsaved)
+
+    # city_trips_recent_highscores_list_of_json = [ob.as_json() for ob in city_trips_recent_highscores]
+
+    # return: user_carbonsaved_latest, user_carbonsaved_cumulative, city_trips_recent_highscores
+    return HttpResponse(json.dumps({'community_trips_recent_json':community_trips_recent_json}), content_type='application/json')
+
+
+
+
+
+
+

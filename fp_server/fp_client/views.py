@@ -77,3 +77,39 @@ def fetch_comm_trips(request):
     
     city_trips_list_of_json = [ob.as_json() for ob in city_trips]
     return HttpResponse(json.dumps({'trips':city_trips_list_of_json}), content_type='application/json')
+
+@csrf_exempt
+def stats(request):
+    def carbonsaved(trip):
+        walk = trip.dist_walked
+        cs_factor = Cars.objects.get(id=trip.car_id).emissions
+        return float(walk * cs_factor) #IN GRAMS PER MILE
+
+    user_id_in = request.POST.get('user_id')
+    user = Users.objects.get(id=user_id_in)
+    
+    # savings for the last trip
+    user_latest_trip = Trips.objects.filter(user=user).latest('end_time') # finds the latest trip
+    
+    user_carbonsaved_latest = carbonsaved(user_latest_trip)
+
+    # cumulative savings
+    user_trips = list(Trips.objects.filter(user_id = user.id))
+    user_carbonsaved_cumulative_raw = 0
+    for i in range(len(user_trips)):
+        trip = user_trips[i]
+        user_carbonsaved_cumulative_raw += carbonsaved(trip)
+    user_carbonsaved_cumulative = float(user_carbonsaved_cumulative_raw / 1000) # KG
+    #now we want to return user_carbonsaved_cumulative
+
+    # savings for recent trips of nearby people
+    user_city = user_latest_trip.city
+    city_trips = list(Trips.objects.filter(city=user_city).order_by('-end_time'))
+    city_trips_recent = city_trips[:25]
+    city_trips_recent_highscores = sorted(city_trips_recent, key = carbonsaved)
+
+    city_trips_recent_highscores_list_of_json = [ob.as_json() for ob in city_trips_recent_highscores]
+
+    # return: user_carbonsaved_latest, user_carbonsaved_cumulative, city_trips_recent_highscores
+
+    return HttpResponse(json.dumps({'latest': user_carbonsaved_latest, 'cumulative': user_carbonsaved_cumulative, 'city_trips_recent_highscores':city_trips_recent_highscores_list_of_json}), content_type='application/json')
